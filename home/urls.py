@@ -19,8 +19,6 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.views.static import serve
-from django.conf.urls import url
 
 from first_app import views
 
@@ -37,9 +35,6 @@ urlpatterns = [
     path('signup/',views.signup,name='signup'),
     path('house/',views.house,name='house'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', views.activate, name='activate')
-
-    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
