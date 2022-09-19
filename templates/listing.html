@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/> 
+    <title>Rental Zone</title>
+    <link rel="icon" href="/static/css/logo.ico">
+    <script src="https://kit.fontawesome.com/f1f62904a1.js" crossorigin="anonymous"></script>
+    
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    
+    
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-white">
+        <div class="container-fluid">
+          <img src="/static/css/nav-logo.png" class="logo">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+              </svg>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/rent">Online Package</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/ads">Ads</a></li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+              <li class="nav-item dropstart" style="background-color: azure; border-radius: 20px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <b style="font-size: 1.2rem;">{{request.user}}</b>
+                </a>
+                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                  
+                </ul>
+              </li>
+            </ul>
+            {% else %}
+            <a href="/login" class="register-btn">Login</a>&nbsp;&nbsp;
+            <a href="/signup" class="register-btn">Signup</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+      {% block body %}
+      {% for message in messages %}
+      <div>
+        <div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+          <strong>Message: </strong>{{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+    <div class="container">
+        <div class="list-container">
+            
+            <div class="left-col">
+                <p>Total Places Count</p>
+                <h1>Recommend Places</h1>
+            {% for i in page_obj %}
+            <div class="house">
+                <a href="/house/{{i.username}}">
+                  <div class="house-img">
+                    <img src="/media/{{i.image1}}">
+                </div>
+              </a>
+                
+                <div class="house-info">
+                    <p>Private {{i.category}} in {{i.owner_location}}</p>
+                    <p>{{i.no_of_room}} Bedroom / 1 Bathroom</p>
+                    <div class="house-price">
+                        <p>Only Family</p>
+                        <h4>{{i.price}}TK <span>/month</span></h4>
+                    </div>
+                </div>
+            </div>            
+            {% endfor %}
+            <nav>
+              <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                  {% endif %}
+               
+              </ul>
+            </nav>        
+
+            </div>
+            <div class="right-col">
+                <div class="sidebar">
+             
+                    <h2>Select Filters</h2>
+                    <h3>Property Type</h3>
+                    {% for i in count_cat %}
+
+                    <div class="filter">
+                        <input type = 'checkbox'><p style="text-transform: uppercase;">{{i.category}}</p>({{i.dcount}})
+                    </div>
+                   
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    {% endblock body %}
+    <!-- <footer>
+        <div class="container">
+          <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            </ul>
+            <p class="text-center text-muted">© 2022 Company, Inc</p>
+          </footer>
+        </div>
+      </footer> -->
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'listing.html'%}
+{% block body%}
+      {% for message in messages %}
+      <div>
+        <div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+          <strong>Message: </strong>{{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="container w-75" style="text-align: center;padding-bottom: 110px;">
+         <form action="/login/" method="POST">
+        {% csrf_token %}
+        <h1 class="h3 m-3 fw-normal">Please Login</h1>
+    
+        <div class="form-floating m-3">
+          <input type="text" class="form-control" id="loginusername" placeholder="username" name="loginusername">
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating m-3">
+          <input type="password" class="form-control" id="loginpassword" placeholder="password" name="loginpassword">
+          <label for="floatingPassword">Password</label>
+        </div>
+    
+        
+        <button class="btn btn-lg btn-primary m-3" type="submit">Login</button>
+        
+      </form>
+      </div>  
+      
+      
+{% endblock body %}
