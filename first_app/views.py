@@ -223,7 +223,7 @@ def ads(request):
         store = Ad(username=username,house_id=house_id,price=price,no_of_room=no_of_room,pub_date=pub_date,image1=image1,image2=image2,image3=image3,image4=image4)
 
         x = str(postal_code)
-        y = pgeocode.Nominatim('bd')
+        y = pgeocode.Nominatim('BD')
 
         store.postal_code = postal_code
         store.division = y.query_postal_code(x).state_name
