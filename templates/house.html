@@ -21,26 +21,14 @@
         <h2>Entire rental unit hosted by {{selected_house.username}}</h2>
         <p>2 guest &nbsp;&nbsp;2 beds &nbsp;&nbsp; 1 bathroom </p>
         <h4>TK {{selected_house.price}} / month</h4>
+        <h4><button type="submit" style="border-radius: 5px;margin:5px;padding:5px;background-color:black;color:white;">Check Availability</button></h4>
     </div>
 
     <hr class="line">
-
-    <form class="check-form">
-        {% csrf_token %}
-        <div>
-            <label>Check-in</label>
-            <input type="datetime-local">  
-        </div>
-        <div>
-            <label>Check-out</label>
-            <input type="datetime-local">  
-        </div>
-        <div class="guest-field">
-            <label>Guest</label>
-            <input type="text" placeholder="2 guest">  
-        </div>
-        <button type="submit">Check Availability</button>
-    </form>
+    <div style="font-size:20px">
+      {{selected_house.description}}
+    </div> 
+    
 
     <ul class="details-list">
         <li><i class="fa-solid fa-house"></i>Entire Home
@@ -59,17 +47,55 @@
     <hr class="line">
 
     <div class="map">
-        <h3>Location on map</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.5096402789177!2d88.62618861482781!3d24.36356828429075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbefd0a55ea957%3A0x2f9cac3357d62617!2z4Kaw4Ka-4Kac4Ka24Ka-4Ka54KeAIOCmquCnjeCmsOCmleCnjOCmtuCmsiDgppMg4Kaq4KeN4Kaw4Kav4KeB4KaV4KeN4Kak4Ka_IOCmrOCmv-CmtuCnjeCmrOCmrOCmv-CmpuCnjeCmr-CmvuCmsuCmr-CmvA!5e0!3m2!1sbn!2sbd!4v1657979394418!5m2!1sbn!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <b>{{selected_house.owner_location}}</b>
-        <p>It's like a home away from home.</p>
+        <div class="row">
+            <h2>Address</h2>
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Division</h5>
+                  <p class="card-text">{{selected_house.division}}</p>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">District</h5>
+                    <p class="card-text">{{selected_house.district}}</p>
+                    
+                  </div>
+                </div>
+              </div>
+            <div class="col-sm-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Upazilla</h5>
+                    <p class="card-text">{{selected_house.thana}}</p>
+                    
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Union Council</h5>
+                  <p class="card-text">{{selected_house.union}}</p>
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        
     </div>
     
     <hr class="line">
+    {% for i in host %}
     <div class="host">
-        <img src="/media/{{selected_house.owner_img}}">
+        <img src="/media/{{i.owner_image}}">
         <div>
-            <h2>Hosted by {{selected_house.username}}</h2>
+            <h2>Hosted by {{i.username}}</h2>
             <p>
                 <span>
                     <i class="fa fa-star"></i>
@@ -82,9 +108,41 @@
             </p>
         </div>
     </div>
-    <a href="#" class="contact-host">Contact Host</a>
+    <br>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Contact with Host
+    </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{i.username}}'s details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Name: {{i.fname}}
+          {{i.lname}}<br>
+          Address: {{i.address}}<br>
+          {% if not i.phone %}
+          Contact: <br>
+          {% else %}
+          Contact: 0{{i.phone}}<br>
+          {% endif %}
+          Email: {{i.email}}<br>
+          Gender: {{i.gender}}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    
 
 </div>
 
+<div class="pt-5"></div>
 
 {% endblock body %}

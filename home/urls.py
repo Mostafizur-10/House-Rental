@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index,name='index'),
     path('rent/',views.rent,name='rent'),
-    path('house/<str:username>',views.house,name='house'),
+    path('house/<str:house_id>',views.house,name='house'),
     path('login/',views.login_process,name='login'),
     path('logout/',views.logout_process,name='logout'),
     path('dashboard/',views.dashboard,name='dashboard'),

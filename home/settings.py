@@ -12,7 +12,7 @@ from django.contrib.messages import constants as messages
 SECRET_KEY = 'django-insecure-+i0k$9+yi7-&4%$c3$7x+)o0v$ytor^m#kg+#lo0(1^!@!ud47'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','rentfind.herokuapp.com',]
 CSRF_TRUSTED_ORIGINS = ["https://rentfind.herokuapp.com/"]
@@ -72,9 +72,9 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['deafult'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['deafult'].update(db_from_env)
 
 
 # Password validation

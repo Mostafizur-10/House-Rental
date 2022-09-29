@@ -1,14 +1,14 @@
 {% extends 'listing.html' %}
 {% block body %}
 &nbsp;
-<div class="container" style="box-shadow:0 5px 10px rgba(0,0,0,0.05); border: 2px;">
+<div class="container" style="box-shadow:0 5px 10px rgba(0,0,0,0.05); border: 2px; background-color: whitesmoke;">
   <h2 style="text-align: center; color: #101011;">Sign Up</h2>
   <form method="post" style="color: rgb(11, 11, 11);padding-bottom:50px; padding-top: 40px;text-align:center;">  
     {% csrf_token %}  
       {% for field in form %}  
       <p>  
-        {{ field.label_tag }}<br>  
-        {{ field }}  
+        <h4>{{ field.label_tag }}</h4><br>  
+        <button>{{ field }}</button>
         <!-- {% if field.help_text %}  
           <small>{{ field.help_text }}</small>  
         {% endif %}   -->
@@ -17,7 +17,7 @@
         {% endfor %}  
       </p>  
       {% endfor %}  
-    <button type="submit" style="border: none; padding:10px;border-radius: 10px;">Submit</button>  
+    <button type="submit" style="background-color: #101011;color: white; padding:5px;border-radius: 5px;">Submit</button>  
   </form> 
 </div>
 {% endblock body %}

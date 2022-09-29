@@ -1,3 +1,4 @@
+
 {% extends 'listing.html' %}
 
 {% block body %}
@@ -10,195 +11,261 @@
 </div>
 {% endfor %}
 
-
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3 sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-text-bottom" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-              Information
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart align-text-bottom" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-              Check available
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              Reports
-            </a>
-          </li>
-          
-        </ul>
-
-       
-        
-        
-      </div>
-    </nav>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        
-      </div>
-      <div class="card-section row">
-        <div class="card grad1 text-bg-light mb-3" style="max-width: 18rem;">
-          <div class="card-header">No of Post</div>
-          <div class="card-body row justify-content-between">
-            <div class="area1"></div>
-            <div class="area2"></div>
-            <div class="area3"><h1 style="text-align: end;">3</h1></div>
-            
-          </div>
+      <div class="col-12">
+        <!-- Page title -->
+        <div class="my-5">
+          <h3>My Profile</h3>
+          <hr>
         </div>
-        
-        <div class="card grad2 text-bg-light mb-3" style="max-width: 18rem;">
-          <div class="card-header">Rent Available</div>
-          <div class="card-body row justify-content-between">
-            <div class="area1"></div>
-            <div class="area2"></div>
-            <div class="area3"><h1 style="text-align: end;">2</h1></div>
-            
-          </div>
-        </div>
-        <div class="card grad3 text-bg-light mb-3" style="max-width: 18rem;">
-          <div class="card-header">Revenue</div>
-          <div class="card-body row justify-content-between">
-            <div class="area1"></div>
-            <div class="area2"></div>
-            <div class="area3"><h1 style="text-align: end;">0.0</h1></div>
-            
-          </div>
-        </div>
-      </div>
+        <!-- Form START -->
+        {% if pre_post %}
+          {% for i in pre_post %}
+        <form class="file-upload"action="/dashboard/" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row mb-5 gx-5">
+            <!-- Contact detail -->
+            <div class="col-xxl-8 mb-5 mb-xxl-0">
+              <div class="bg-secondary-soft px-4 py-5 rounded">
+                <div class="row g-3">
+                  <h4 class="mb-4 mt-0">Contact details</h4>
+                  
+                  <!-- First Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">First Name *</label>
+                    <input type="text" class="form-control" value="{{i.fname}}" aria-label="First name" id="fname" name="fname">
+                  </div>
+                  <!-- Last name -->
+                  <div class="col-md-6">
+                    <label class="form-label">Last Name *</label>
+                    <input type="text" class="form-control" value="{{i.lname}}" aria-label="Last name" id="lname" name="lname">
+                  </div>
+                  <!-- Phone number -->
+                  <div class="col-md-6">
+                    <label class="form-label">Address *</label>
+                    <input type="text" class="form-control" value="{{i.address}}" aria-label="Address" id ="address" name="address">
+                  </div>
+                  <!-- Mobile number -->
+                  <div class="col-md-6">
+                    <label class="form-label">Mobile number *</label>
+                    {% if not i.phone %}
+                    <input type="text" class="form-control" value="" aria-label="Phone number" id="mobile_no" name="mobile_no">
+                    {% else %}
+                    <input type="text" class="form-control" value="0{{i.phone}}" aria-label="Phone number" id="mobile_no" name="mobile_no">
+                    {% endif %}
+                  </div>
+                  <!-- Email -->
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" value="{{i.email}}" name="email">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label pb-2" >Gender</label>
+                    <br>
+                    {% if i.gender == "male" %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male" checked>
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female">
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
+                    {% elif i.gender == "female" %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male">
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female" checked>
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
+                    {% else %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male">
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female">
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
 
-      <!-- <h2>{{request.user}}</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Publish</th>
-              <th scope="col">Contact</th>
-              <th scope="col">Location</th>
-              <th scope="col">Category</th>
-              <th scope="col">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-          
-            {% for i in dash %}
-           
-            <tr>
-              <td>{{i.pub_date}}</td>
-              <td>{{i.contact}}</td>
-              <td>{{i.owner_location}}</td>
-              <td>{{i.category}}</td>
-              <td>{{i.price}}</td>
-            </tr>
-           
-            {% endfor %}
-          </tbody>
-        </table>
-      </div> -->
-      <div class="card">
-        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-          {{request.user}}
-        </h3>
-        <div class="card-body">
-          <div id="table" class="table-editable">
-            <table class="table table-bordered table-responsive-md table-striped text-center">
-              <thead>
-                <tr>
-                  <th class="text-center">Publish Date</th>
-                  <th class="text-center">Contact</th>
-                  <th class="text-center">Address</th>
-                  <th class="text-center">Amount</th>
-                  <th class="text-center">Current Status</th>
+                    {% endif %}
+                  </div>
                   
                   
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
-                  <td class="pt-3-half" contenteditable="true">30</td>
-                  <td class="pt-3-half" contenteditable="true">Deepends</td>
-                  <td class="pt-3-half" contenteditable="true">Spain</td>
-                  <td class="pt-3-half" contenteditable="true">Madrid</td>
-                  <!-- <td class="pt-3-half">
-                    <span class="table-up"
-                      ><a href="#!" class="indigo-text"
-                        ><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a
-                    ></span>
-                    <span class="table-down"
-                      ><a href="#!" class="indigo-text"
-                        ><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a
-                    ></span> -->
-                  <!-- </td> -->
-                  <td>
-                    <span class="table-remove"
-                      ><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">
-                        SAVE
-                      </button></span
-                    >
-                  </td>
-                </tr>
-                <!-- This is our clonable table line -->
-                <tr>
-                  <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
-                  <td class="pt-3-half" contenteditable="true">45</td>
-                  <td class="pt-3-half" contenteditable="true">Insectus</td>
-                  <td class="pt-3-half" contenteditable="true">USA</td>
-                  <td class="pt-3-half" contenteditable="true">San Francisco</td>
-                  <!-- <td class="pt-3-half">
-                    <span class="table-up"
-                      ><a href="#!" class="indigo-text"
-                        ><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a
-                    ></span>
-                    <span class="table-down"
-                      ><a href="#!" class="indigo-text"
-                        ><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a
-                    ></span>
-                  </td> -->
-                  <td>
-                    <span class="table-remove"
-                      ><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">
-                        SAVE
-                      </button></span
-                    >
-                  </td>
-                </tr>
+                </div>
+              </div>
               
-                
-              </tbody>
-            </table>
+            </div>          
+            <!-- Upload profile -->
+            <div class="col-xxl-4">
+              <div style="text-align: center;font-weight:800;">Upload Profile Picture</div>
+              <div class="avatar-wrapper" id="test">
+                <img class="profile-pic"  src="/media/{{i.owner_image}}"/>
+                <div class="upload-button">
+                  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                </div>
+                <input class="file-upload" type="file" accept="image/*" id="owner_image" name="owner_image">
+              </div>
+            </div>
+            <div class="gap-3 d-md-flex justify-content-md-end text-center pt-4">
+               
+              <button type="submit" class="btn btn-outline-success btn-md">Update profile</button>
+            </div>
           </div>
-        </div>
+        </form>
+</div>
+
+        {% endfor %}
+        {% else %}
+        <form class="file-upload"action="/dashboard/" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row mb-5 gx-5">
+            <!-- Contact detail -->
+            <div class="col-xxl-8 mb-5 mb-xxl-0">
+              <div class="bg-secondary-soft px-4 py-5 rounded">
+                <div class="row g-3">
+                  <h4 class="mb-4 mt-0">Contact details</h4>
+                  
+                  <!-- First Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">First Name *</label>
+                    <input type="text" class="form-control" value="" aria-label="First name" id="fname" name="fname">
+                  </div>
+                  <!-- Last name -->
+                  <div class="col-md-6">
+                    <label class="form-label">Last Name *</label>
+                    <input type="text" class="form-control" value="" aria-label="Last name" id="lname" name="lname">
+                  </div>
+                  <!-- Phone number -->
+                  <div class="col-md-6">
+                    <label class="form-label">Address *</label>
+                    <input type="text" class="form-control" value="" aria-label="Address" id ="address" name="address">
+                  </div>
+                  <!-- Mobile number -->
+                  <div class="col-md-6">
+                    <label class="form-label">Mobile number *</label>
+                    {% if not i.phone %}
+                    <input type="text" class="form-control" value="" aria-label="Phone number" id="mobile_no" name="mobile_no">
+                    {% else %}
+                    <input type="text" class="form-control" value="" aria-label="Phone number" id="mobile_no" name="mobile_no">
+                    {% endif %}
+                  </div>
+                  <!-- Email -->
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" value="" name="email">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label pb-2" >Gender</label>
+                    <br>
+                    {% if i.gender == "male" %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male" checked>
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female">
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
+                    {% elif i.gender == "female" %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male">
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female" checked>
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
+                    {% else %}
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="male" value="male">
+                      <span class="form-check-label" for="male">Male</span>
+                    </label>
+                    <label class="radio-inline px-3">
+                      <input type="radio" name="gender" id="female" value="female">
+                      <span class="form-check-label" for="female">Female</span>
+                    </label>
+
+                    {% endif %}
+                  </div>
+                  
+                  
+                </div>
+              </div>
+              
+            </div>          
+            <!-- Upload profile -->
+            <div class="col-xxl-4">
+              <div style="text-align: center;font-weight:800;">Upload Profile Picture</div>
+              <div class="avatar-wrapper" id="test">
+                <img class="profile-pic"  src=""/>
+                <div class="upload-button">
+                  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                </div>
+                <input class="file-upload" type="file" accept="image/*" id="owner_image" name="owner_image">
+              </div>
+            </div>
+            <div class="gap-3 d-md-flex justify-content-md-end text-center pt-4">
+               
+              <button type="submit" class="btn btn-outline-success btn-md">Update profile</button>
+            </div>
+          </div>
+        </form>
+</div>
+
+        
+        {% endif %}
+
+ 
       </div>
-      <!-- Editable table -->
-      
-    </main>
+  
   </div>
 </div>
 
+<!-- Ads table            -->
+
+<div class="container pt-3">
+  <div class="row">
+      <div class="col-12">
+        <!-- Page title -->
+        <div class="my-5">
+          <h3>Ads Details</h3>
+          <hr>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="container" style="text-align: center;">
+  <table class="table table-bordered">
+    <thead>
+      <tr style="background-color:whitesmoke;">
+        
+        <th scope="col">Category</th>
+        <th scope="col">No. of Rooms</th>
+        <th scope="col">Price</th>
+        <th scope="col">Date</th>
+        
+      </tr>
+      {% for i in dash %}
+      <tr>
+        <th scope="col">{{i.category}}</th>
+        <th scope="col">{{i.no_of_room}}</th>
+        <th scope="col">{{i.price}}</th>
+        <th scope="col">{{i.pub_date}}</th>
+        
+      </tr>
+      {% endfor %}
+    </thead>
+    
+  </table>
+</div>
+
+
+<script src="/static/js/filter.js"></script>
 
 
 {% endblock body%}
