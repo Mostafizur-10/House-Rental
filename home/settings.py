@@ -12,7 +12,7 @@ from django.contrib.messages import constants as messages
 SECRET_KEY = 'django-insecure-+i0k$9+yi7-&4%$c3$7x+)o0v$ytor^m#kg+#lo0(1^!@!ud47'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','rentfind.herokuapp.com',]
 CSRF_TRUSTED_ORIGINS = ["https://rentfind.herokuapp.com/"]
@@ -112,7 +112,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_URL = 'static/'
 
