@@ -21,10 +21,40 @@
         <h2>Entire rental unit hosted by {{selected_house.username}}</h2>
         <p>2 guest &nbsp;&nbsp;2 beds &nbsp;&nbsp; 1 bathroom </p>
         <h4>TK {{selected_house.price}} / month</h4>
-        <h4><button type="submit" style="border-radius: 5px;margin:5px;padding:5px;background-color:black;color:white;">Check Availability</button></h4>
+        <!-- <button type="button" style="border-radius: 5px;margin:5px;padding:5px;background-color:black;color:white;">Check Availability</button> -->
+        <!-- Button trigger modal -->
+      <h4><button type="button" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#check_status">
+        Check Availability
+      </button></h4>
+
+      <!-- Modal -->
+      <div class="modal fade" id="check_status" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Checking...</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            {% if selected_house.value == 'avail' %}
+            <div class="modal-body" >
+            <h5 style="color: green;">Available</h5>
+            <p>(Please go to the bottom to get Owner information.)</p>
+            </div>
+            {% else %}
+            <div class="modal-body">
+              <h5 style="color: red;">Not Available</h5>
+            </div>
+            {% endif %}
+
+            
+          </div>
+        </div>
+      </div>
     </div>
 
+
     <hr class="line">
+    <h2>Description</h2>
     <div style="font-size:20px">
       {{selected_house.description}}
     </div> 
@@ -93,7 +123,13 @@
     <hr class="line">
     {% for i in host %}
     <div class="host">
+      {% if i.owner_image %}
         <img src="/media/{{i.owner_image}}">
+      {% else %}
+      <div style="background-color: whitesmoke;">
+
+      </div>
+      {% endif %}
         <div>
             <h2>Hosted by {{i.username}}</h2>
             <p>
@@ -144,5 +180,7 @@
 </div>
 
 <div class="pt-5"></div>
+
+<script src="/static/js/filter.js"></script>
 
 {% endblock body %}

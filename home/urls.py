@@ -28,12 +28,12 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('rent/',views.rent,name='rent'),
     path('house/<str:house_id>',views.house,name='house'),
+    path('custom/<str:house_id>/',views.custom,name='custom'),
     path('login/',views.login_process,name='login'),
     path('logout/',views.logout_process,name='logout'),
     path('dashboard/',views.dashboard,name='dashboard'),
     path('ads/',views.ads,name='ads'),
     path('signup/',views.signup,name='signup'),
-    path('house/',views.house,name='house'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', views.activate, name='activate')
 
 

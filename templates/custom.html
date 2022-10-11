@@ -1,0 +1,94 @@
+{% extends 'listing.html' %}
+
+{% block body %}
+{% for message in messages %}
+<div>
+  <div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+    <strong>Message: </strong>{{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+{% endfor %}
+
+<div class="justify-content-md-center">
+  <form class="file-upload text-center pt-2"  action="/custom/{{x}}/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+            <h2 class="text-center pb-5">Customization</h2>
+            
+            <div class="category container pt-4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text m-1">Price(TK)</span>
+                </div>
+                <input type="text" class="form-control" value="{{selected_house.price}}" name="price" id="price" aria-label="Amount (to the nearest Tk)">
+                <div class="input-group-append">
+                  <span class="input-group-text m-1">/month</span>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text m-1">Postal Code</span>
+                </div>
+                <input type="text" class="form-control" value="{{selected_house.postal_code}}" name="postal_code" id="postal_code" aria-label="Amount (to the nearest Tk)">
+                
+              </div>
+              
+            </div>
+
+            <div style="font-size: 20px;padding-bottom: 50px; display: inline-block;">  
+              
+              <p class="input-group-text justify-content-md-center" style="font-size: 20px;">Status</p>
+              {% if selected_house.value == "paid" %}
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="paid" value="paid" checked>
+                <span class="form-check-label" for="paid">Paid</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="pending" value="pending">
+                <span class="form-check-label" for="pending">Pending</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="avail" value="avail">
+                <span class="form-check-label" for="avail">Available</span>
+              </label>
+              {% elif selected_house.value == "pending" %}
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="paid" value="paid">
+                <span class="form-check-label" for="paid">Paid</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="pending" value="pending" checked>
+                <span class="form-check-label" for="pending">Pending</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="avail" value="avail">
+                <span class="form-check-label" for="avail">Available</span>
+              </label>
+              {% else %}
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="paid" value="paid">
+                <span class="form-check-label" for="paid">Paid</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="pending" value="pending">
+                <span class="form-check-label" for="pending">Pending</span>
+              </label>
+              <label class="radio-inline px-3">
+                <input type="radio" name="value" id="avail" value="avail" checked>
+                <span class="form-check-label" for="avail">Available</span>
+              </label>
+            {% endif %}
+            </div>
+            
+            <div class="gap-3 d-md-flex justify-content-md-center text-center pt-4">
+              <button type="submit" class="btn btn-outline-success btn-md">Update</button>
+            </div>        
+  </form>
+  <div class="gap-3 d-md-flex justify-content-md-center text-center pt-4">
+    <button type="button"  class="btn btn-outline-dark btn-md"><a href="/dashboard/" style="text-decoration: none;color: rgb(185, 65, 65);">Go Back</a></button>
+  </div>
+</div>
+
+
+{% endblock body %}

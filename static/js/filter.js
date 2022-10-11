@@ -1,5 +1,5 @@
 
-
+// image upload section starts
 
 $(document).ready(function() {
 	
@@ -24,11 +24,23 @@ $(document).ready(function() {
   });
   
 });
+// image upload section ends
 
 
-// function doRefresh(){
-//     $("#test").load("dashboard/");
-// }
-// $(function() {
-//     setInterval(doRefresh, 5000);
-// });
+
+// filter section starts
+$(document).ready(function(){
+    $('.wonder').click(function(){
+        var txt = "";
+        $('.wonder:checked').each(function(){
+            txt+=$(this).val()+','
+        
+        });
+        $('#valuelist').val(txt);
+    });
+    
+
+});
+
+
+// filter section ends

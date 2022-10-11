@@ -19,7 +19,10 @@ class Ad(models.Model):
     image2 = models.ImageField(upload_to="images", default='')
     image3 = models.ImageField(upload_to="images", default='')
     image4 = models.ImageField(upload_to="images", default='')
+    value = models.CharField(max_length=10,default='avail')
 
+    def __str__(self):
+        return self.house_id
 
     
 class Profile(models.Model):

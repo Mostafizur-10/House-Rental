@@ -18,32 +18,6 @@ from random import randint
 import pgeocode
 
 
-def profile(request):
-    if request.method == 'POST':
-        username = request.user
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
-        address = request.POST.get('address')
-        mobile_no = request.POST.get('mobile_no')
-        owner_image = request.FILES.get('owner_image')
-        email = request.POST.get('email')
-        if not mobile_no:
-            mobile_no = None
-        store = Profile(username=username,fname=fname,lname=lname,address=address,email=email,owner_image=owner_image,phone=mobile_no)
-
-        selected = request.POST.get('gender')
-
-        if selected == 'male':
-            store.gender='male'
-
-        elif selected == 'female':
-            store.gender='female'
-
-        store.save()
-        messages.success(request,"Successfully stored information")
-        return redirect('/dashboard')
-
-    return render(request,'profile.html')
 
 def index(request):
     return render(request,'base.html')
@@ -56,6 +30,19 @@ def rent(request):
     page_number = request.GET.get('page',1)
     page_obj = paginator.page(page_number)
     cat_list = (Ad.objects.values('category').annotate(dcount = Count('category')).order_by())
+    
+
+    if request.method == 'POST':
+        new_list=[]
+        id_list = request.POST.getlist('check_cat')
+        my_dict = Ad.objects.all().values()
+        for i in range(0,len(id_list)):
+            for j in range(0,len(my_dict)):
+                if id_list[i] == str(my_dict[j]['category']):
+                    new_list.append(my_dict[j])
+        
+        return render(request,'listing.html',{'page_obj':page_obj,'count_cat':cat_list,'new_list':new_list})
+
 
     return render(request, 'listing.html', {'page_obj':page_obj,'count_cat':cat_list})
 
@@ -109,9 +96,8 @@ def dashboard(request):
         store = Profile(username=username,fname=fname,lname=lname,address=address,email=email,owner_image=owner_image,phone=mobile_no)
         selected = request.POST.get('gender')
 
-        if not selected:
-            store.gender = p7
-        elif selected == 'male':
+
+        if selected == 'male':
             store.gender='male'
 
         elif selected == 'female':
@@ -195,6 +181,7 @@ def house(request,house_id):
                         'district':details[x].district,
                         'thana':details[x].thana,
                         'union':details[x].union,
+                        'value':details[x].value,
                      }
     
     house.update(house2)
@@ -251,3 +238,62 @@ def ads(request):
         pos = pos + 1
         messages.success(request,"Successfully Published")
     return render(request,'ads.html')
+
+def custom(request,house_id):
+    x = house_id
+    selected_house = get_object_or_404(Ad,house_id=house_id)
+    if request.method == 'POST':
+       selected_house = Ad.objects.filter(house_id=house_id).values()
+       get_status = request.POST.get('value')
+       new_postal = request.POST.get('postal_code')
+       new_price = request.POST.get('price')
+       p0 = selected_house[0]['username']
+       p1 = selected_house[0]['house_id']
+       p2 = selected_house[0]['category']
+       p3 = selected_house[0]['price']
+       p4 = selected_house[0]['pub_date']
+       p5 = selected_house[0]['no_of_room']
+       p6 = selected_house[0]['image1']
+       p7 = selected_house[0]['image2']
+       p8 = selected_house[0]['image3']
+       p9 = selected_house[0]['image4']
+       p10 = selected_house[0]['division']
+       p11 = selected_house[0]['district']
+       p12 = selected_house[0]['thana']
+       p13 = selected_house[0]['union']
+       p14 = selected_house[0]['postal_code']
+       p15 = selected_house[0]['datetime']
+       p16 = selected_house[0]['description']
+
+       
+       store = Ad(username=p0,house_id=p1,no_of_room=p5,pub_date=p4,image1=p6,image2=p7,image3=p8,image4=p9,datetime=p15,
+       category=p2,value=get_status,description=p16)
+
+       if new_postal:
+        x = str(new_postal)
+        y = pgeocode.Nominatim('BD')
+        store.postal_code = new_postal
+        store.division = y.query_postal_code(x).state_name
+        store.district = y.query_postal_code(x).county_name
+        store.thana = y.query_postal_code(x).community_name
+        store.union = y.query_postal_code(x).place_name
+       else:
+        store.postal_code = p14
+        store.division=p10
+        store.district=p11
+        store.thana=p12
+        store.union=p13
+
+       if new_price:
+        store.price = new_price  
+       else:
+        store.price = p3     
+        
+
+       Ad.objects.filter(house_id=house_id).delete()
+       store.save()
+       selected_house = get_object_or_404(Ad,house_id=house_id)
+       messages.success(request,"Successfully updated")
+       return render(request,'custom.html',locals())
+
+    return render(request,'custom.html',locals())

@@ -72,7 +72,45 @@
                 <p>Total Places Count</p>
                 <h1>Recommend Places</h1>
                 <param id="list"></param>
-                <p></p>
+            {% if new_list %}
+            {% for i in new_list %}
+            <!-- {% if i in listArr %}
+            <p>success</p>
+            {% endif %} -->
+        <div class="house">
+            <a href="/house/{{i.house_id}}">
+              <div class="house-img">
+                <img src="/media/{{i.image1}}">
+            </div>
+          </a>
+            
+            <div class="house-info">
+                <p>Private {{i.category}} in {{i.owner_location}}</p>
+                <p>{{i.no_of_room}} Bedroom / 1 Bathroom</p>
+                <div class="house-price">
+                    <p>Only Family</p>
+                    <h4>{{i.price}}TK <span>/month</span></h4>
+                </div>
+            </div>
+        </div>            
+        {% endfor %}
+        <nav>
+          <ul class="pagination">
+            {% if new_list.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ new_list.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+            <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+            {% if new_list.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ new_list.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ new_list.paginator.num_pages }}">Last</a></li>
+              {% endif %}
+           
+          </ul>
+        </nav>        
+            {% else %}
             {% for i in page_obj %}
                 <!-- {% if i in listArr %}
                 <p>success</p>
@@ -109,7 +147,8 @@
                   {% endif %}
                
               </ul>
-            </nav>        
+            </nav>  
+            {% endif %}      
 
             </div>
             <div class="right-col">
@@ -117,34 +156,43 @@
              
                     <h2>Select Filters</h2>
                     <h3>Property Type</h3>
-                    {% for i in count_cat %}
-
-                    <div class="filter">
-                        <input type = 'checkbox' class="filter-checkbox" data-filter='category' value="{{i.category}}"><p style="text-transform: uppercase;">{{i.category}}</p>({{i.dcount}})          
-                    </div>
-                   
-                    {% endfor %}
-                    <p class="valuelist"></p>
+                    <form class="file-upload"action="/rent/" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {% for i in count_cat %}
+                      {% if i.dcount %}
+                      <div class="filter pt-2">
+                        <input type = 'submit' style="padding: 5px; border-radius: 10px; border-color: aliceblue;" class="wonder" name="check_cat" id="{{i.category}}" value="{{i.category}}"><div class="filter_cnt">
+                          {{i.dcount}}
+                        </div>
+                        
+                      </div>
+                      {% else %}
+                      <div class="filter">
+                        <input type = 'checkbox' class="wonder" name="check_cat" id="{{i.category}}" value="{{i.category}}"><div style="border:1px solid;margin: 2px;">{{i.dcount}}</div>
+                      </div>
+                      {% endif %} 
+                      {% endfor %}
+                      
+                    </form>
                 </div>
             </div>
             
         </div>
     </div>
     {% endblock body %}
-    <!-- <footer>
-        <div class="container">
-          <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-            <p class="text-center text-muted">© 2022 Company, Inc</p>
-          </footer>
-        </div>
-      </footer> -->
-      <script src="/static/js/filter.js"></script>
+    
+      <!-- <script src="/static/js/filter.js"></script> -->
+      <script>
+         $(document).ready(function(){
+        $('.wonder').click(function(){
+            var txt = "";
+            $('.wonder:checked').each(function(){
+                txt+=$(this).val()+','
+            });
+            $('#valuelist').val(txt);
+        });
+
+       });
+      </script>
 </body>
 </html>
