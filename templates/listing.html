@@ -112,9 +112,7 @@
         </nav>        
             {% else %}
             {% for i in page_obj %}
-                <!-- {% if i in listArr %}
-                <p>success</p>
-                {% endif %} -->
+               
             <div class="house">
                 <a href="/house/{{i.house_id}}">
                   <div class="house-img">
@@ -180,19 +178,6 @@
         </div>
     </div>
     {% endblock body %}
-    
-      <!-- <script src="/static/js/filter.js"></script> -->
-      <script>
-         $(document).ready(function(){
-        $('.wonder').click(function(){
-            var txt = "";
-            $('.wonder:checked').each(function(){
-                txt+=$(this).val()+','
-            });
-            $('#valuelist').val(txt);
-        });
 
-       });
-      </script>
 </body>
 </html>
