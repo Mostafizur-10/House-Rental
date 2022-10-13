@@ -194,50 +194,59 @@ def house(request,house_id):
 
 def ads(request):
 
+
+    get_username = request.user
+    x = Profile.objects.filter(username=str(get_username))
     pos = randint(-10000000000,10000000000)
-    if request.method == 'POST':
 
-        username = request.user
-        house_id = str(request.user) + str(pos)
-        no_of_room = request.POST.get('nor')
-        image1 = request.FILES.get('img-house-1')
-        image2 = request.FILES.get('img-house-2')
-        image3 = request.FILES.get('img-house-3')
-        image4 = request.FILES.get('img-house-4')
-        pub_date = request.POST.get('publish_date')
-        price = request.POST.get('price')
-        postal_code = request.POST.get('postal_code')
-        store = Ad(username=username,house_id=house_id,price=price,no_of_room=no_of_room,pub_date=pub_date,image1=image1,image2=image2,image3=image3,image4=image4)
+    if not x:
+        messages.warning(request,"Complete your profile before any advertisement")
+        return render(request,'dashboard.html')
 
-        x = str(postal_code)
-        y = pgeocode.Nominatim('BD')
+    else:
+        if request.method == 'POST':
 
-        store.postal_code = postal_code
-        store.division = y.query_postal_code(x).state_name
-        store.district = y.query_postal_code(x).county_name
-        store.thana = y.query_postal_code(x).community_name
-        store.union = y.query_postal_code(x).place_name
-        
+            username = request.user
+            house_id = str(request.user) + str(pos)
+            no_of_room = request.POST.get('nor')
+            image1 = request.FILES.get('img-house-1')
+            image2 = request.FILES.get('img-house-2')
+            image3 = request.FILES.get('img-house-3')
+            image4 = request.FILES.get('img-house-4')
+            pub_date = request.POST.get('publish_date')
+            price = request.POST.get('price')
+            postal_code = request.POST.get('postal_code')
+            store = Ad(username=username,house_id=house_id,price=price,no_of_room=no_of_room,pub_date=pub_date,image1=image1,image2=image2,image3=image3,image4=image4)
 
-        selected = request.POST.get('category')
+            x = str(postal_code)
+            y = pgeocode.Nominatim('BD')
 
-        if selected == 'flat':
-            store.category='flat'
+            store.postal_code = postal_code
+            store.division = y.query_postal_code(x).state_name
+            store.district = y.query_postal_code(x).county_name
+            store.thana = y.query_postal_code(x).community_name
+            store.union = y.query_postal_code(x).place_name
+            
 
-        elif selected == 'villa':
-            store.category='villa'
+            selected = request.POST.get('category')
 
-        elif selected == 'house':
-            store.category='house'
+            if selected == 'flat':
+                store.category='flat'
+
+            elif selected == 'villa':
+                store.category='villa'
+
+            elif selected == 'house':
+                store.category='house'
 
 
-        elif selected == 'hostel':
-            store.category='hostel'
+            elif selected == 'hostel':
+                store.category='hostel'
 
-        store.save()
-        pos = pos + 1
-        messages.success(request,"Successfully Published")
-    return render(request,'ads.html')
+            store.save()
+            pos = pos + 1
+            messages.success(request,"Successfully Published")
+        return render(request,'ads.html')
 
 def custom(request,house_id):
     x = house_id
