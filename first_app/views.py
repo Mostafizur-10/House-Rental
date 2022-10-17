@@ -103,12 +103,14 @@ def dashboard(request):
         elif selected == 'female':
             store.gender='female'
 
-        store.save()
-        pre_post = Profile.objects.filter(username=str(request.user)).values()
-        dash = Ad.objects.filter(username=str(request.user))
-        messages.success(request,"Successfully updated")
-        
-        return render(request,'dashboard.html',locals())  
+        if not mobile_no or not email or not fname or not lname or not address or not owner_image:
+            messages.warning(request, 'Fill up all Credentials and try again.')
+        else:
+            store.save()
+            pre_post = Profile.objects.filter(username=str(request.user)).values()
+            dash = Ad.objects.filter(username=str(request.user))
+            messages.success(request,"Successfully updated")
+            return render(request,'dashboard.html',locals())  
     return render(request,'dashboard.html',locals())
 
 
