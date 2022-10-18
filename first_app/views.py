@@ -103,8 +103,8 @@ def dashboard(request):
         elif selected == 'female':
             store.gender='female'
 
-        if not mobile_no or not email or not fname or not lname or not address or not owner_image:
-            messages.warning(request, 'Fill up all Credentials and try again.')
+        if not mobile_no or not email or not fname or not lname or not address:
+            messages.warning(request, 'Fill Up Essential Credentials and Try Again.')
         else:
             store.save()
             pre_post = Profile.objects.filter(username=str(request.user)).values()
