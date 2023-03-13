@@ -1,5 +1,5 @@
 # House-Rental
-<i>I am very glad that I have priliminary been completed my first website using Django framework. It has been taken 6 weeks long. During that period of time I have been found a lot of barriers both inside and outside of this. I have been mentioned all my views through this project.</i>
+I am very glad that I have priliminary been completed my first website using Django framework. It has been taken 6 weeks long. During that period of time I have been found a lot of barriers both inside and outside of this. I have been mentioned all my views through this project.
 <h2>Purpose</h2>
 People have to stay in different areas in many kind of purposes like education, business etc. This website will make things easier to get a comfortable place to stay in short span of time.  Some people want to rent their properties like flat, villa, house, hostel . They can use that site for advertisement which may carry more attention for rent.
 <p>
